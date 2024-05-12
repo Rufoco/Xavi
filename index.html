@@ -25,34 +25,34 @@
             position: fixed;
             top: 65%;  /* Centrado verticalmente */
             left: 50%; /* Centrado horizontalmente */
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); /* Ajuste para centrar exactamente el formulario */
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
             background-color: #00153E;
-            padding: 3em;  /* Incrementado de 2em para dar más espacio interno */
+            padding: 2em;
             border: 3px solid #fef300;
             border-radius: 10px;
-            width: 60%;  /* Ajustado para tener un ancho específico */
-            min-width: 300px;  /* Asegura que el formulario no sea demasiado pequeño */
-            max-width: 600px;  /* Asegura que el formulario no sea demasiado grande */
-            z-index: 2;
+            width: fit-content; /* Ajusta el ancho al contenido */
+            padding: 20px;
         }
         #formulario button, #botonMusica button {
             margin: 5px;
         }
         .balon {
             position: absolute;
-            width: 200px;
-            height: 200px;
+            width: 200px; /* Aumentado de 150px a 200px */
+            height: 200px; /* Aumentado de 150px a 200px */
             background-image: url('balon.png');
             background-size: cover;
             border-radius: 50%;
+            box-shadow: none;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #FFD700;
-            font-size: 20px;
+            font-size: 20px; /* Aumentado para mantener la proporción */
             text-align: center;
             animation: flotar 10s infinite ease-in-out;
             font-weight: bold;
@@ -74,7 +74,8 @@
             margin-bottom: 1.5em;
             border-radius: 10px;
             border: 1px solid black;
-            width: 100%;
+            width: 100%; /* Ajusta el ancho al 100% del contenedor */
+            font-size: 20px; /* Tamaño de fuente aumentado para hacer el texto más grande */
         }
         #botonMusica {
             margin: 1em;
@@ -176,10 +177,10 @@
             var play = document.getElementById("musicaDeFondo");
             if (botonMusica.innerText === '🔊') {
                 botonMusica.innerText = '🔇';
-                play.play();
+                play.pause();
             } else {
                 botonMusica.innerText = '🔊';
-                play.pause();
+                play.play();
             }
         }
     </script>
