@@ -25,34 +25,34 @@
             position: fixed;
             top: 65%;  /* Centrado verticalmente */
             left: 50%; /* Centrado horizontalmente */
-            transform: translate(-50%, -50%); /* Ajuste para centrar exactamente el formulario */
-            z-index: 2;
+            transform: translate(-50%, -50%);
             display: flex;
             flex-direction: column;
             align-items: center;
             background-color: #00153E;
-            padding: 2em;
+            padding: 3em;  /* Incrementado de 2em para dar más espacio interno */
             border: 3px solid #fef300;
             border-radius: 10px;
-            width: fit-content; /* Ajusta el ancho al contenido */
-            padding: 20px;
+            width: 60%;  /* Ajustado para tener un ancho específico */
+            min-width: 300px;  /* Asegura que el formulario no sea demasiado pequeño */
+            max-width: 600px;  /* Asegura que el formulario no sea demasiado grande */
+            z-index: 2;
         }
         #formulario button, #botonMusica button {
             margin: 5px;
         }
         .balon {
             position: absolute;
-            width: 200px; /* Aumentado de 150px a 200px */
-            height: 200px; /* Aumentado de 150px a 200px */
+            width: 200px;
+            height: 200px;
             background-image: url('balon.png');
             background-size: cover;
             border-radius: 50%;
-            box-shadow: none;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #FFD700;
-            font-size: 20px; /* Aumentado para mantener la proporción */
+            font-size: 20px;
             text-align: center;
             animation: flotar 10s infinite ease-in-out;
             font-weight: bold;
@@ -74,7 +74,7 @@
             margin-bottom: 1.5em;
             border-radius: 10px;
             border: 1px solid black;
-            width: 100%; /* Ajusta el ancho al 100% del contenedor */
+            width: 100%;
         }
         #botonMusica {
             margin: 1em;
