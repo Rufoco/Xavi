@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deseos</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: -100;
+        }
+        #formulario {
+            position: absolute;
+            top: 65%;  /* Ajustado para bajar el formulario */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #e7e7e7;
+            padding: 2em;
+            border: 3px solid black;
+            border-radius: 10px;
+        }
+        #formulario button, #botonMusica button {
+            margin: 5px;
+        }
+        .balon {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-image: url('balon.png');
+            background-size: cover;
+            border-radius: 50%;
+            box-shadow: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFD700;
+            font-size: 16px;
+            text-align: center;
+            animation: flotar 10s infinite ease-in-out;
+            font-weight: bold;
+            text-shadow: 2px 2px 0px #0000FF;
+        }
+        .enviar {
+            padding: 1em;
+            color: #ffffff;
+            background-color: #ffa500;
+            border: 1px solid black;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .enviar:hover {
+            background-color: #ffbd44;
+        }
+        #mensaje {
+            padding: 1em;
+            margin-bottom: 1.5em;
+            border-radius: 10px;
+            border: 1px solid black;
+        }
+        #botonMusica {
+            margin: 1em;
+            font-size: 24px;
+            padding: 1em;
+            background-color: #ffa500;
+            color: #ffffff;
+            border: 1px solid black;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        @keyframes flotar {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted playsinline>
+        <source src="cancha.mp4" type="video/mp4">
+        Tu navegador no soporta video HTML5.
+    </video>
+    <button onclick="PlayMusic()" class="enviar" id="botonMusica">🔊</button>
+    <div id="formulario">
+        <input type="text" id="mensaje" placeholder="Escribe un deseo para Xavi" maxlength="100">
+        <button onclick="enviarBalon()" class="enviar">Enviar Deseo</button>
+    </div>
+    <audio id="musicaDeFondo" preload="auto" autoplay loop>
+        <source src="america.mp3" type="audio/mp3">
+    </audio>
+    <div id="contenedorMensajes"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAJM1gQas2C9eprGQypfn6c3rPI",
+            projectId: "xavi-ee0ad",
+            storageBucket: "xavi-ee0ad.appspot.com",
+            messagingSenderId: "292128619689",
+            appId: "1:292128619689:web:ebeb3e261239aba2343db8",
+            authDomain: "xavi-ee0ad.firebaseapp.com",
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function cargarMensajes() {
+            db.collection("deseos").orderBy("timestamp", "desc").limit(100)
+                .get().then((querySnapshot) => {
+                    const contenedorMensajes = document.getElementById('contenedorMensajes');
+                    contenedorMensajes.innerHTML = '';
+                    querySnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        crearBalon(data.deseo, false);
+                    });
+                });
+        }
+        function enviarBalon() {
+            const mensaje = document.getElementById('mensaje').value;
+            if (mensaje) {
+                crearBalon(mensaje, true);
+                document.getElementById('mensaje').value = '';
+                document.getElementById('formulario').style.display = 'none';
+                document.getElementById('botonMusica').style.display = 'block';
+                db.collection("deseos").add({
+                    deseo: mensaje,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(function(docRef) {
+                    console.log("Documento escrito con ID: ", docRef.id);
+                }).catch(function(error) {
+                    console.error("Error añadiendo documento: ", error);
+                });
+            }
+        }
+        function crearBalon(texto, personalizado) {
+            const balon = document.createElement("div");
+            balon.className = "balon";
+            balon.textContent = texto;
+            balon.style.left = `${Math.random() * window.innerWidth}px`;
+            balon.style.top = `100vh`;
+            balon.style.animationDuration = `${Math.random() * 20 + 10}s`;
+            balon.style.animationDelay = personalizado ? `0s` : `-${Math.random() * 5}s`;
+            document.body.appendChild(balon);
+        }
+        window.onload = () => {
+            cargarMensajes();
+        };
+        function PlayMusic() {
+            var botonMusica = document.getElementById("botonMusica");
+            var play = document.getElementById("musicaDeFondo");
+            if (botonMusica.innerText === '🔊') {
+                botonMusica.innerText = '🔇';
+                play.pause();
+            } else {
+                botonMusica.innerText = '🔊';
+                play.play();
+            }
+        }
+    </script>
+</body>
+</html>
