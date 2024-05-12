@@ -42,8 +42,8 @@
         }
         .balon {
             position: absolute;
-            width: 150px;
-            height: 150px;
+            width: 200px; /* Aumentado de 150px a 200px */
+            height: 200px; /* Aumentado de 150px a 200px */
             background-image: url('balon.png');
             background-size: cover;
             border-radius: 50%;
@@ -52,7 +52,7 @@
             justify-content: center;
             align-items: center;
             color: #FFD700;
-            font-size: 16px;
+            font-size: 20px; /* Aumentado para mantener la proporción */
             text-align: center;
             animation: flotar 10s infinite ease-in-out;
             font-weight: bold;
@@ -176,10 +176,10 @@
             var play = document.getElementById("musicaDeFondo");
             if (botonMusica.innerText === '🔊') {
                 botonMusica.innerText = '🔇';
-                play.pause();
+                play.play();
             } else {
                 botonMusica.innerText = '🔊';
-                play.play();
+                play.pause();
             }
         }
     </script>
