@@ -34,8 +34,8 @@
             padding: 20px; /* Consistencia en el padding */
             border: 3px solid #fef300;
             border-radius: 10px;
-            width: fit-content; /* Ajusta el ancho al contenido */
             min-width: 400px; /* Establece un ancho mínimo para el formulario */
+            width: auto; /* Permite que el formulario crezca según el contenido */
         }
         #formulario button, #botonMusica button {
             margin: 5px;
@@ -74,7 +74,7 @@
             margin-bottom: 1.5em;
             border-radius: 10px;
             border: 1px solid black;
-            width: 80%; /* Ajusta el ancho al 100% del contenedor */
+            width: 80%; /* Ajusta el ancho al 80% del contenedor */
             font-size: 20px; /* Tamaño de fuente aumentado para hacer el texto más grande */
         }
         #botonMusica {
@@ -101,6 +101,27 @@
                 transform: translateY(-100vh);
                 opacity: 0;
             }
+        }
+        @keyframes bailar {
+            0%, 100% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            25% {
+                transform: translate(-50%, -50%) rotate(10deg);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(-10deg);
+            }
+            75% {
+                transform: translate(-50%, -50%) rotate(10deg);
+            }
+        }
+        img {
+            background: none; /* Asegura que la imagen no tiene fondo */
+            border: none;    /* Asegura que la imagen no tiene borde */
+        }
+        .baile {
+            animation: bailar 1s infinite; /* Aplica la animación de baile */
         }
     </style>
 </head>
@@ -147,7 +168,20 @@
             if (mensaje) {
                 crearBalon(mensaje, true);
                 document.getElementById('mensaje').value = '';
-                document.getElementById('formulario').style.display = 'none';
+                // Reemplaza el formulario con la imagen del águila sin contenedor
+                document.getElementById('formulario').remove(); 
+                const aguila = document.createElement('img');
+                aguila.src = 'aguila.png';
+                aguila.classList.add('baile'); // Añade la clase de baile
+                aguila.style.position = 'fixed';
+                aguila.style.top = '60%';
+                aguila.style.left = '50%';
+                aguila.style.transform = 'translate(-50%, -50%)';
+                aguila.style.width = '700px';  /* Ajuste del tamaño del águila */
+                aguila.style.height = 'auto';
+                aguila.style.background = 'none';
+                aguila.style.border = 'none';
+                document.body.appendChild(aguila);
                 document.getElementById('botonMusica').style.display = 'block';
                 db.collection("deseos").add({
                     deseo: mensaje,
