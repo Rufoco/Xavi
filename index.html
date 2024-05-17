@@ -11,6 +11,7 @@
             height: 100%;
             overflow: hidden;
             font-family: Arial, sans-serif;
+            font-size: 16px;
         }
         video {
             position: fixed;
@@ -35,7 +36,8 @@
             border: 3px solid #fef300;
             border-radius: 10px;
             min-width: 400px; /* Establece un ancho mínimo para el formulario */
-            width: auto; /* Permite que el formulario crezca según el contenido */
+            width: 70%; /* Permite que el formulario crezca según el contenido */
+            box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del ancho */
         }
         #formulario button, #botonMusica button {
             margin: 5px;
